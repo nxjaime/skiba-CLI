@@ -1,7 +1,7 @@
 # Skiba CLI - 30-Sprint Roadmap
 
 **Project**: Skiba - Modular OpenRouter CLI Assistant  
-**Status**: MVP Complete (v0.1.0)  
+**Status**: Sprints 1-3 Complete ✅  
 **Timeline**: 30 sprints (~60 weeks at 2-week sprints)  
 **Last Updated**: 2025-06-24
 
@@ -12,11 +12,11 @@
 ### Phase 1: Foundation & Reliability (Sprints 1-5)
 **Goal**: Stabilize the core, add resilience, establish testing culture.
 
-| Sprint | Title | User Stories | Acceptance Criteria |
-|--------|-------|--------------|--------------------|
-| 1 | Retry & Resilience | As a user, I want transient API failures to auto-retry so my prompts don't fail on network hiccups. | • Exponential backoff with jitter on 429/5xx/4xx<br>• Max 3 retries, configurable<br>• Clear fallback notification |
-| 2 | Real Token Counting | As a user, I want accurate token estimates so costs are predictable. | • Use `tiktoken` for OpenAI‑style models<br>• Fallback to char/4 for others<br>• Show token estimate before execution (with flag) |
-| 3 | Unit Test Coverage | As a developer, I want tests for routing, cost, and utils so I can refactor safely. | • 80%+ coverage on router, cost, utils<br>• fixtures for mock API responses<br>• CI runs on push |
+| Sprint | Title | User Stories | Acceptance Criteria | Status |
+|--------|-------|--------------|---------------------|--------|
+| 1 | Retry & Resilience | As a user, I want transient API failures to auto-retry so my prompts don't fail on network hiccups. | • Exponential backoff with jitter on 429/5xx/4xx<br>• Max 3 retries, configurable<br>• Clear fallback notification | ✅ DONE |
+| 2 | Real Token Counting | As a user, I want accurate token estimates so costs are predictable. | • Use `tiktoken` for OpenAI‑style models<br>• Fallback to char/4 for others<br>• Show token estimate before execution (with flag) | ✅ DONE |
+| 3 | Unit Test Coverage | As a developer, I want tests for routing, cost, and utils so I can refactor safely. | • 80%+ coverage on router, cost, utils<br>• fixtures for mock API responses<br>• CI runs on push | ✅ DONE |
 | 4 | Structured Logging | As an operator, I want JSON logs so I can monitor in production. | • `logging` module with `--debug`/`--json` flags<br>• No API keys in logs<br>• Separate error/usage/telemetry logs |
 | 5 | Config Validation | As a user, I want config typos to be caught early. | • Pydantic schema for config<br>• Auto‑migration on version bumps<br>• `skiba config validate` command |
 
@@ -121,10 +121,13 @@
 
 ## Next Steps (Immediate)
 
-1. Prioritize Sprints 1‑3 (Retry, Real Tokens, Tests)
-2. Set up repo: Issues for each user story, project board with 30 columns
-3. Assign sprint owner(s), define Definition of Done
-4. Kickoff Sprint 1
+1. ~~Prioritize Sprints 1‑3 (Retry, Real Tokens, Tests)~~ ✅ DONE
+2. ~~Set up repo: Issues for each user story, project board with 30 columns~~ ✅ Partially done (handoff.md exists)
+3. ~~Assign sprint owner(s), define Definition of Done~~ ✅ Done
+4. ~~Kickoff Sprint 1~~ ✅ Done
+5. **Sprint 4**: Structured Logging (`--debug`/`--json` flags, no API keys in logs)
+6. **Sprint 5**: Config Validation (Pydantic schema, `skiba config validate`)
+7. Set up GitHub Actions CI (lint, typecheck, test on push)
 
 ---
 
