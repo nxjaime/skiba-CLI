@@ -1,0 +1,16 @@
+{
+  "name": "skiba",
+  "version": "0.1.0",
+  "description": "OpenRouter-powered modular Python CLI assistant",
+  "bin": {
+    "skiba": "./bin/skiba.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/skiba.js --version 2>/dev/null || true"
+  },
+  "keywords": ["cli", "openrouter", "ai", "llm", "coding-assistant"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  }
+}
