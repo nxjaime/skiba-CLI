@@ -21,15 +21,17 @@ from .receipts import render_receipt
 from .utils import read_files
 
 console = Console(
-    theme=Theme({
-        "info": "bold bright_red",
-        "warning": "bright_red",
-        "error": "bold white",
-        "user": "bold white",
-        "assistant": "white",
-        "accent": "bright_red",
-        "muted": "dim white",
-    })
+    theme=Theme(
+        {
+            "info": "bold bright_red",
+            "warning": "bright_red",
+            "error": "bold white",
+            "user": "bold white",
+            "assistant": "white",
+            "accent": "bright_red",
+            "muted": "dim white",
+        }
+    )
 )
 
 BANNER = """
@@ -65,7 +67,9 @@ def print_balance():
 def run_prompt(prompt: str, paths: List[str], cfg: Dict) -> bool:
     context_limit = int(cfg.get("context_limit_tokens", 4096))
     local_ctx = read_files(paths, limit=context_limit) if paths else ""
-    full_prompt = prompt + ("\n\n[Context from files]\n" + local_ctx if local_ctx else "")
+    full_prompt = prompt + (
+        "\n\n[Context from files]\n" + local_ctx if local_ctx else ""
+    )
 
     est_tokens = estimate_tokens(full_prompt)
     try:
@@ -87,36 +91,52 @@ def run_prompt(prompt: str, paths: List[str], cfg: Dict) -> bool:
         refresh_per_second=12,
     ):
         try:
-            res = chat(model, [{"role": "user", "content": full_prompt}], max_tokens=max_tokens)
+            res = chat(
+                model, [{"role": "user", "content": full_prompt}], max_tokens=max_tokens
+            )
         except Exception as e:
             console.print(f"\n[error]Model error:[/error] {e}")
             console.print("[muted]Falling back to minimax...[/muted]")
             model = "minimax"
             try:
-                res = chat(model, [{"role": "user", "content": full_prompt}], max_tokens=max_tokens)
+                res = chat(
+                    model,
+                    [{"role": "user", "content": full_prompt}],
+                    max_tokens=max_tokens,
+                )
             except Exception as e2:
                 console.print(f"\n[error]Fatal:[/error] {e2}")
                 return False
 
     content = ""
     if isinstance(res, dict):
-        content = "".join(c.get("message", {}).get("content", "") for c in res.get("choices", []))
+        content = "".join(
+            c.get("message", {}).get("content", "") for c in res.get("choices", [])
+        )
     usage = res.get("usage", {}) if isinstance(res, dict) else {}
     prompt_tokens = int(usage.get("prompt_tokens", est_tokens))
     completion_tokens = int(usage.get("completion_tokens", 0))
     total_cost = cost_for(model, prompt_tokens, completion_tokens)
 
+    receipt_text = render_receipt(prompt_tokens, completion_tokens, total_cost)
     console.print()
-    console.print(Panel("[assistant]" + content, title="Response", border_style="bright_red", expand=False))
+    console.print(
+        Panel(
+            "[assistant]" + content,
+            title="Response",
+            border_style="bright_red",
+            expand=False,
+        )
+    )
     console.print()
-    console.print(f"[muted]│[/muted] [receipt]{}[/receipt]".format(
-        render_receipt(prompt_tokens, completion_tokens, total_cost)
-    ))
+    console.print(f"[muted]│[/muted] [muted]{receipt_text}[/muted]")
     return True
 
 
 def interactive_mode(cfg: Dict):
-    console.print("[info]Entering interactive mode. Type 'exit' or Ctrl+C to quit.[/info]")
+    console.print(
+        "[info]Entering interactive mode. Type 'exit' or Ctrl+C to quit.[/info]"
+    )
     console.print()
     history = []
     while True:
@@ -138,17 +158,27 @@ def interactive_mode(cfg: Dict):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="skiba", description="OpenRouter-backed AI coding assistant")
+    parser = argparse.ArgumentParser(
+        prog="skiba", description="OpenRouter-backed AI coding assistant"
+    )
     subparsers = parser.add_subparsers(dest="command", required=False)
 
     run_p = subparsers.add_parser("run", help="Run a prompt")
     run_p.add_argument("prompt", nargs="?", help="Prompt to execute", default="")
     run_p.add_argument("paths", nargs="*", help="Local files as context", default=[])
     run_p.add_argument("-l", "--lang", dest="lang", help="Force output language")
-    run_p.add_argument("--set-budget", dest="budget", type=float, help="Per-prompt budget (USD)")
-    run_p.add_argument("--set-tokens", dest="tokens", type=int, help="Max tokens per prompt")
-    run_p.add_argument("--no-history", dest="no_history", action="store_true", help="Disable history")
-    run_p.add_argument("-y", "--yes", dest="yes", action="store_true", help="Skip confirmation")
+    run_p.add_argument(
+        "--set-budget", dest="budget", type=float, help="Per-prompt budget (USD)"
+    )
+    run_p.add_argument(
+        "--set-tokens", dest="tokens", type=int, help="Max tokens per prompt"
+    )
+    run_p.add_argument(
+        "--no-history", dest="no_history", action="store_true", help="Disable history"
+    )
+    run_p.add_argument(
+        "-y", "--yes", dest="yes", action="store_true", help="Skip confirmation"
+    )
 
     subparsers.add_parser("interactive", help="Start interactive mode")
     subparsers.add_parser("balance", help="Check OpenRouter balance")
@@ -169,6 +199,7 @@ def main():
         if args.key:
             if args.value is None:
                 import json
+
                 console.print_json(json.dumps(cfg, indent=2))
             else:
                 cfg[args.key] = type(cfg.get(args.key, ""))(args.value)
@@ -176,6 +207,7 @@ def main():
                 console.print(f"[accent]✓[/accent] Set {args.key} = {args.value}")
         else:
             import json
+
             console.print_json(json.dumps(cfg, indent=2))
         return
 
@@ -206,9 +238,15 @@ def main():
     print_balance()
     console.print()
     console.print("[info]Usage:[/info]")
-    console.print("  [accent]skiba run \"your prompt\"[/accent]          Run a single prompt")
-    console.print("  [accent]skiba run \"prompt\" file.py file2.md[/accent] Run with file context")
-    console.print("  [accent]skiba interactive[/accent]                  Start interactive mode")
+    console.print(
+        '  [accent]skiba run "your prompt"[/accent]          Run a single prompt'
+    )
+    console.print(
+        '  [accent]skiba run "prompt" file.py file2.md[/accent] Run with file context'
+    )
+    console.print(
+        "  [accent]skiba interactive[/accent]                  Start interactive mode"
+    )
     console.print("  [accent]skiba balance[/accent]                      Check balance")
     console.print("  [accent]skiba config[/accent]                       View config")
     console.print()
