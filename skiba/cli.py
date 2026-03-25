@@ -35,18 +35,14 @@ console = Console(
 )
 
 BANNER = """
-[bold bright_red]        ██████╗ [/bold bright_red][white]     ██╗[/white]     [bold bright_red]██████╗ [/bold bright_red][white] ██████╗ [/white]
-[bold bright_red]        ╚════██╗[/bold bright_red][white]    ██║[/white]    [bold bright_red]██╔══██╗[/bold bright_red][white]██╔═══██╗[/white]
-[bold bright_red]         █████╔╝[/bold bright_red][white]    ██║[/white]    [bold bright_red]██████╔╝[/bold bright_red][white]██║   ██║[/white]
-[bold bright_red]        ██╔══██╗[/bold bright_red][white]    ██║[/white]    [bold bright_red]██╔══██╗[/bold bright_red][white]██║   ██║[/white]
-[bold bright_red]        ██████╔╝[/bold bright_red][white]    ███████╗[/white] [bold bright_red]██║  ██║[/bold bright_red][white]╚██████╔╝[/white]
-[bold bright_red]        ╚═════╝ [/bold bright_red][white]    ╚══════╝[/white] [bold bright_red]╚═╝  ╚═╝[/bold bright_red][white] ╚═════╝ [/white]
-[bold bright_red]   ██████╗ ███████╗██╗   ██╗██████╗ ██╗   ██╗██╗██╗   ██╗ ██████╗ ███████╗[/bold bright_red]
-[bold bright_red]   ██╔══██╗██╔════╝██║   ██║██╔══██╗██║   ██║██║██║   ██║██╔════╝ ██╔════╝[/bold bright_red]
-[bold bright_red]   ██║  ██║█████╗  ██║   ██║██████╔╝██║   ██║██║██║   ██║██║  ███╗███████╗[/bold bright_red]
-[bold bright_red]   ██║  ██║██╔══╝  ╚██╗ ██╔╝██╔══██╗╚██╗ ██╔╝██║╚██╗ ██╔╝██║   ██║╚════██║[/bold bright_red]
-[bold bright_red]   ██████╔╝███████╗ ╚████╔╝ ██████╔╝ ╚████╔╝ ██║ ╚████╔╝ ╚██████╔╝███████║[/bold bright_red]
-[bold bright_red]   ╚═════╝ ╚══════╝  ╚═══╝  ╚═════╝   ╚═══╝  ╚═╝  ╚═══╝   ╚═════╝ ╚══════╝[/bold bright_red]"""
+[bold bright_red]
+ ██████╗ ██████╗ ███████╗██╗██████╗ ██╗ █████╗ ███╗   ██╗
+██╔════╝██╔═══██╗██╔════╝██║██╔══██╗██║██╔══██╗████╗  ██║
+██║     ██║   ██║███████╗██║██║  ██║██║███████║██╔██╗ ██║
+██║     ██║   ██║╚════██║██║██║  ██║██║██╔══██║██║╚██╗██║
+╚██████╗╚██████╔╝███████║██║██████╔╝██║██║  ██║██║ ╚████║
+ ╚═════╝ ╚═════╝ ╚══════╝╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
+[/bold bright_red]"""
 SUBTITLE = "[dim white]— SKIBA —  OpenRouter · AI Coding Assistant[/dim white]"
 
 
