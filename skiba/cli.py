@@ -55,7 +55,7 @@ def print_balance():
         console.print("[error]OpenRouter balance unavailable[/error] (check API key)")
 
 
-def run_prompt(prompt: str, paths: List[str], cfg: Dict) -> bool:
+def run_prompt(prompt: str, paths: List[str], cfg: Dict, dry_run: bool = False) -> bool:
     context_limit = int(cfg.get("context_limit_tokens", 4096))
     local_ctx = read_files(paths, limit=context_limit) if paths else ""
     full_prompt = prompt + (
@@ -70,6 +70,19 @@ def run_prompt(prompt: str, paths: List[str], cfg: Dict) -> bool:
 
     model, _ = route_model(full_prompt, est_tokens, bal)
     max_tokens = int(cfg.get("max_tokens_per_prompt", 2048))
+    if dry_run:
+        completion_est = int(cfg.get("max_tokens_per_prompt", 2048))
+        estimated_cost = cost_for(model, est_tokens, completion_est)
+        console.print()
+        console.print(
+            f"[muted]Estimated prompt tokens:[/muted] [accent]{est_tokens}[/accent]"
+        )
+        console.print(f"[muted]Selected model:[/muted] [accent]{model}[/accent]")
+        console.print(
+            f"[muted]Estimated max cost:[/muted] [accent]${estimated_cost:.6f}[/accent] (assuming {completion_est} completion tokens)"
+        )
+        console.print()
+        return True
 
     console.print(f"[muted]Model:[/muted] [accent]{model.upper()}[/accent]")
     console.print(f"[muted]Tokens:[/muted] [accent]~{est_tokens}[/accent]")
@@ -170,6 +183,13 @@ def main():
     run_p.add_argument(
         "-y", "--yes", dest="yes", action="store_true", help="Skip confirmation"
     )
+    run_p.add_argument(
+        "--estimate",
+        "-e",
+        dest="estimate",
+        action="store_true",
+        help="Show token and cost estimate without executing",
+    )
 
     subparsers.add_parser("interactive", help="Start interactive mode")
     subparsers.add_parser("balance", help="Check OpenRouter balance")
@@ -222,7 +242,7 @@ def main():
             cfg["max_tokens_per_prompt"] = args.tokens
         save_config(cfg)
         console.print()
-        success = run_prompt(prompt, list(args.paths), cfg)
+        success = run_prompt(prompt, list(args.paths), cfg, dry_run=args.estimate)
         sys.exit(0 if success else 1)
 
     print_banner()
