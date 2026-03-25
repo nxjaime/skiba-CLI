@@ -13,9 +13,15 @@ MODEL_COSTS_PER_1K = {
 
 
 def cost_for(model: str, tokens_prompt: int, tokens_completion: int) -> float:
-    per_1k = MODEL_COSTS_PER_1K.get(model, MODEL_COSTS_PER_1K["minimax"])
+    key = "minimax"
+    if "claude" in model.lower():
+        key = "claude_sonnet"
+    elif "gemini" in model.lower():
+        key = "gemini_flash"
+    elif "minimax" in model.lower():
+        key = "minimax"
+    per_1k = MODEL_COSTS_PER_1K.get(key, MODEL_COSTS_PER_1K["minimax"])
     total_tokens = max(0, tokens_prompt + tokens_completion)
-    # cost per token approximated as per_1k / 1000
     return (total_tokens / 1000.0) * per_1k
 
 
