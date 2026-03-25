@@ -34,11 +34,10 @@ console = Console(
     )
 )
 
-BANNER = """[bold bright_red]
-╔═╗╦ ╦╔═╗╔═╗╔═╗  ╔╦╗╦ ╦╔═╗  ╔╦╗╦ ╦╔═╗╔═╗╔═╗
-║ ╦║ ║║╣ ╚═╗╚═╗   ║ ╠═╣║╣   ║║║║ ║║╣ ╚═╗╚═╗
-╚═╝╚═╝╚═╝╚═╝╚═╝   ╩ ╩ ╩╚═╝  ═╩╝╚═╝╚═╝╚═╝╚═╝
-[/bold bright_red]"""
+BANNER = """[bright_red]
+╔═╗╦ ╦╔═╗╔═╗╔═╗  ╔╦╗╦ ╦╔═╗  ╔╦╗╦ ╦╔═╗╔═╗╔═╗[/bright_red]
+[bold bright_red]║ ╦║ ║║╣ ╚═╗╚═╗   ║ ╠═╣║╣   ║║║║ ║║╣ ╚═╗╚═╗[/bold bright_red]
+[bold red]╚═╝╚═╝╚═╝╚═╝╚═╝   ╩ ╩ ╩╚═╝  ═╩╝╚═╝╚═╝╚═╝╚═╝[/bold red]"""
 SUBTITLE = "[dim white]OpenRouter · AI Coding Assistant[/dim white]"
 
 
