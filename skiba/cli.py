@@ -34,16 +34,8 @@ console = Console(
     )
 )
 
-BANNER = """
-[bold bright_red]
- ██████╗ ██████╗ ███████╗██╗██████╗ ██╗ █████╗ ███╗   ██╗
-██╔════╝██╔═══██╗██╔════╝██║██╔══██╗██║██╔══██╗████╗  ██║
-██║     ██║   ██║███████╗██║██║  ██║██║███████║██╔██╗ ██║
-██║     ██║   ██║╚════██║██║██║  ██║██║██╔══██║██║╚██╗██║
-╚██████╗╚██████╔╝███████║██║██████╔╝██║██║  ██║██║ ╚████║
- ╚═════╝ ╚═════╝ ╚══════╝╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
-[/bold bright_red]"""
-SUBTITLE = "[dim white]— SKIBA —  OpenRouter · AI Coding Assistant[/dim white]"
+BANNER = "[bold bright_red]SKIBA[/bold bright_red]"
+SUBTITLE = "[dim white]OpenRouter · AI Coding Assistant[/dim white]"
 
 
 def print_banner():
