@@ -1,8 +1,9 @@
 """Dynamic routing engine to select model based on prompt context."""
 
 import os
-import re
 from typing import Tuple
+
+from .tokens import count_tokens
 
 OPENROUTER_MODELS = {
     "minimax": os.environ.get("OPENROUTER_MODEL_MINIMAX", "minimax/minimax"),
@@ -16,7 +17,8 @@ OPENROUTER_MODELS = {
 
 
 def estimate_tokens(text: str) -> int:
-    return max(1, int(len(text) / 4))
+    """Estimate token count using tiktoken or fallback."""
+    return count_tokens(text)
 
 
 def classify_task(prompt: str) -> str:

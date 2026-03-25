@@ -2,17 +2,18 @@ import os
 from pathlib import Path
 from typing import List
 
+from .tokens import count_tokens
+
 
 def read_files(paths: List[str], limit: int) -> str:
-    """Read files and concatenate their contents, respecting a rough token limit."""
+    """Read files and concatenate their contents, respecting a token limit."""
     parts = []
     total = 0
     for p in paths:
         try:
             with open(p, "r", encoding="utf-8") as f:
                 data = f.read()
-                # crude token estimate: characters / 4
-                est = max(1, len(data) // 4)
+                est = count_tokens(data)
                 if total + est > limit:
                     break
                 parts.append(data)
